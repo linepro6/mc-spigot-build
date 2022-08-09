@@ -33,9 +33,9 @@ You can get the other version just doing following steps,
 
 ### 兼容的 JDK 版本
 
-- Minecraft 1.18 and above
+- Minecraft 1.18 及以上
   - `JDK Version: 17`
 - Minecraft 1.17
   - `JDK Version: 16`
-- Minecraft 1.16 and below
+- Minecraft 1.16 及以下
   - `JDK Version: 8`
