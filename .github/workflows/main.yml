@@ -15,7 +15,6 @@ jobs:
         with:
           java-version: '16'
           distribution: 'microsoft'
-          cache: maven
 
       - name: Run Action-SpigotMC
         uses: SpraxDev/Action-SpigotMC@v4
