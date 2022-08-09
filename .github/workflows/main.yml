@@ -54,5 +54,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
           title: Spigot ${{ inputs.spigot-version }} (${{ steps.date.outputs.date }})
-          automatic_release_tag: ${{ inputs.spigot-version }}-${{ steps.date.outputs.date }}
           files: spigot*.jar
