@@ -26,36 +26,33 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '16'
-          distribution: 'microsoft'
+          java-version: ${{ inputs.java-version }}
+          distribution: microsoft
 
       - name: Getting BuildTools
         run: curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o BuildTools.jar
       
-      - name: "Building Spigot"
+      - name: Building Spigot ${{ inputs.spigot-version }}
         # !! Change 'latest' to the version what you wanted. !!
         # Also Java version need changing if you're trying building versions below 1.17.X!
-        run: "java -jar BuildTools.jar --compile Spigot --rev 1.17.1"
-
-      - name: List Files
-        run: ls -al
+        run: java -jar BuildTools.jar --compile Spigot --rev ${{ inputs.spigot-version }}
       
       # Uploading the build jar files.
-      - name: "Uploading Built JAR Files"
-        uses: "actions/upload-artifact@v2"
+      - name: Uploading Built JAR Files
+        uses: actions/upload-artifact@v2
         with:
-          name: Spigot JAR Files
+          name: Spigot ${{ inputs.spigot-version }} JAR Files
           path: spigot*.jar
 
-      - name: "Getting Current Date"
+      - name: Getting Current Date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
-      - name: "Creating Release"
+      - name: Creating Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
-          title: "Spigot ${{ steps.date.outputs.date }}"
-          automatic_release_tag: "${{ steps.date.outputs.date }}"
+          title: Spigot ${{ inputs.spigot-version }} (${{ steps.date.outputs.date }})
+          automatic_release_tag: ${{ inputs.spigot-version }}-${{ steps.date.outputs.date }}
           files: spigot*.jar
