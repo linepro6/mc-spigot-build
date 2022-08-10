@@ -4,18 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       java-version:
-        description: 'JDK Version for Spigot Build'
+        description: JDK Version for Spigot Build
         required: true
-        default: 17
+        default: "17"
         type: choice
         options:
-        - 8
-        - 16
-        - 17
+        - "8"
+        - "16"
+        - "17"
       spigot-version:
-        description: 'Spigot Version for Build'
+        description: Spigot Version for Build
         required: true
-        default: 'latest'
+        default: latest
         type: string
 
 jobs:
@@ -33,11 +33,8 @@ jobs:
         run: curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o BuildTools.jar
       
       - name: Building Spigot ${{ inputs.spigot-version }}
-        # !! Change 'latest' to the version what you wanted. !!
-        # Also Java version need changing if you're trying building versions below 1.17.X!
         run: java -jar BuildTools.jar --compile Spigot --rev ${{ inputs.spigot-version }}
-      
-      # Uploading the build jar files.
+
       - name: Uploading Built JAR Files
         uses: actions/upload-artifact@v2
         with:
